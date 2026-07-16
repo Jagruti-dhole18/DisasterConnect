@@ -29,7 +29,7 @@ dotenv.config({ path: fileURLToPath(new URL('./.env', import.meta.url)) });
 connectDB();
 
 const app = express();
-app.set('trust proxy', true);
+app.set("trust proxy", 1);
 const server = http.createServer(app);
 
 const io = new Server(server, {
