@@ -1,13 +1,21 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.BREVO_LOGIN,
+    pass: process.env.BREVO_SMTP_KEY,
+  },
+});
 
 export const sendEmail = async ({ to, subject, text, html }) => {
   try {
-    const { data, error } = await resend.emails.send({
+    await transporter.sendMail({
       from: process.env.EMAIL_FROM,
       to,
       subject,
@@ -15,16 +23,9 @@ export const sendEmail = async ({ to, subject, text, html }) => {
       html,
     });
 
-    if (error) {
-      console.error(error);
-      throw error;
-    }
-
-    console.log("Email sent:", data);
-
-    return { success: true };
+    console.log("Email sent successfully");
   } catch (err) {
-    console.error("Email send failed:", err);
+    console.error("Email Error:", err);
     throw err;
   }
 };
