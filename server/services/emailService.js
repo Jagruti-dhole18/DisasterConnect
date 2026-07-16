@@ -5,7 +5,7 @@ dotenv.config();
 
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
-  port: 587,
+  port: 465,
   secure: false,
   auth: {
     user: process.env.BREVO_LOGIN,
@@ -15,6 +15,8 @@ const transporter = nodemailer.createTransport({
 
 export const sendEmail = async ({ to, subject, text, html }) => {
   try {
+      await transporter.verify();
+  console.log("SMTP VERIFIED");
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
       to,
