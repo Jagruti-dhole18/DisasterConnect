@@ -1,38 +1,30 @@
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { Resend } from "resend";
+import dotenv from "dotenv";
 
-dotenv.config({
-  path: path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../.env'),
-});
+dotenv.config();
 
-const createTransporter = () => nodemailer.createTransport({
-  host: process.env.EMAIL_HOST ,
-  port: parseInt(process.env.EMAIL_PORT, 10),
-  secure: false,
-  family: 4,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendEmail = async ({ to, subject, text, html }) => {
-  const transporter = createTransporter();
-  const mailOptions = {
-    from: `DisasterConnect <${process.env.EMAIL_USER}>`,
-    to,
-    subject,
-    text,
-    html,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
+    const { data, error } = await resend.emails.send({
+      from: process.env.EMAIL_FROM,
+      to,
+      subject,
+      text,
+      html,
+    });
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    console.log("Email sent:", data);
+
     return { success: true };
-  } catch (error) {
-    console.error('Email send failed:', error.message);
-    throw error;
+  } catch (err) {
+    console.error("Email send failed:", err);
+    throw err;
   }
 };
