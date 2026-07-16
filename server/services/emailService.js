@@ -1,38 +1,32 @@
-import axios from "axios";
+import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 
 dotenv.config();
 
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST || "smtp.gmail.com",
+  port: Number(process.env.EMAIL_PORT) || 587,
+  secure: false, // true only for port 465
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
 export const sendEmail = async ({ to, subject, text, html }) => {
   try {
-    const response = await axios.post(
-      "https://api.brevo.com/v3/smtp/email",
-      {
-        sender: {
-          name: process.env.EMAIL_FROM_NAME,
-          email: process.env.EMAIL_FROM,
-        },
-        to: [{ email: to }],
-        subject,
-        htmlContent: html,
-        textContent: text,
-      },
-      {
-        headers: {
-          "accept": "application/json",
-          "api-key": process.env.BREVO_API_KEY,
-          "content-type": "application/json",
-        },
-      }
-    );
+    const info = await transporter.sendMail({
+      from: `"DisasterConnect" <${process.env.EMAIL_USER}>`,
+      to,
+      subject,
+      text,
+      html,
+    });
 
-    console.log("✅ Email sent:", response.data);
-    return response.data;
+    console.log("✅ Email sent:", info.messageId);
+    return info;
   } catch (err) {
-    console.error(
-      "❌ Brevo API Error:",
-      err.response?.data || err.message
-    );
+    console.error("❌ Nodemailer Error:", err);
     throw err;
   }
 };
