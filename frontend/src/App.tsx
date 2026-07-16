@@ -18,7 +18,7 @@ import CitizenRequests from './pages/citizen/CitizenRequests';
 import CitizenReliefCamps from './pages/citizen/CitizenReliefCamps';
 import CitizenMissingPersons from './pages/citizen/CitizenMissingPersons';
 import CitizenProfile from './pages/citizen/CitizenProfile';
-import CitizenNotifications from './pages/citizen/CitizenNotifications';
+// import CitizenNotifications from './pages/citizen/CitizenNotifications';
 import VolunteerDashboard from './pages/volunteer/VolunteerDashboard';
 import VolunteerMissions from './pages/volunteer/VolunteerMissions';
 import VolunteerHistory from './pages/volunteer/VolunteerHistory';
