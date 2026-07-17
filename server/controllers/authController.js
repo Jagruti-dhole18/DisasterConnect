@@ -214,22 +214,21 @@ export const forgotPassword = async (req, res) => {
           <strong>DisasterConnect</strong> account.
         </p>
 
-        <div style="text-align:center; margin:35px 0;">
-          <a
-            href="${resetUrl}"
-            style="
-              background:#2563eb;
-              color:#ffffff;
-              text-decoration:none;
-              padding:14px 28px;
-              border-radius:8px;
-              font-weight:600;
-              display:inline-block;
-            "
-          >
-            Reset Password
-          </a>
-        </div>
+        <a
+  href="${resetUrl}"
+  rel="notrack"
+  style="
+    background:#2563eb;
+    color:#ffffff;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:8px;
+    font-weight:600;
+    display:inline-block;
+  "
+>
+  Reset Password
+</a>
 
         <p style="color:#475569; line-height:1.6;">
           If the button doesn't work, copy and paste this link into your browser:
