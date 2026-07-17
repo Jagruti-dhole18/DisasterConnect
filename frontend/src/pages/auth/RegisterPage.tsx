@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, Mail, Lock, Phone, Building2, BadgeCheck, ArrowRight, Check } from 'lucide-react';
+import { User,Mail, Lock, Phone, Building2, BadgeCheck, ArrowRight, Check } from 'lucide-react';
 import AuthLayout from './AuthLayout';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
@@ -17,10 +17,15 @@ export default function RegisterPage() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [role, setRole] = useState<UserRole>('citizen');
-  const [form, setForm] = useState({
-    name: '', email: '', password: '', phone: '',
-    organizationName: '', registrationId: '', skills: '',
-  });
+ const [form, setForm] = useState({
+  name: '',
+  email: '',
+  password: '',
+  phone: '',
+  organizationName: '',
+  registrationId: '',
+  skills: '',
+});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -32,17 +37,18 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       const result = await register({
-        name: form.name,
-        email: form.email,
-        password: form.password,
-        role,
-        phone: form.phone,
-        organizationName: form.organizationName,
-        registrationId: form.registrationId,
-        skills: form.skills ? form.skills.split(',').map((s) => s.trim()) : [],
-      });
-      toast(result.verificationCodeSent ? 'Verification code sent to your email.' : 'Account created. Please resend the verification code.', result.verificationCodeSent ? 'success' : 'error');
-      navigate(`/verify-email?email=${encodeURIComponent(result.email)}`);
+  name: form.name,
+  email: form.email,
+  password: form.password,
+  role,
+  phone: form.phone,
+  organizationName: form.organizationName,
+  registrationId: form.registrationId,
+  skills: form.skills ? form.skills.split(',').map((s) => s.trim()) : [],
+});
+     toast("Account created successfully");
+
+navigate('/login');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {

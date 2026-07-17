@@ -10,7 +10,6 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import ResetPasswordPage from './pages/auth/ResetPasswordPage';
-import VerifyEmailPage from './pages/auth/VerifyEmailPage';
 import NotFoundPage from './pages/NotFoundPage';
 import CitizenDashboard from './pages/citizen/CitizenDashboard';
 import CitizenSOS from './pages/citizen/CitizenSOS';
@@ -73,7 +72,6 @@ function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/reset-password" element={<ResetPasswordPage />} />
-              <Route path="/verify-email" element={<VerifyEmailPage />} />
 
               {/* Role-based redirect from /app */}
               <Route path="/app" element={<RoleRedirect />} />

@@ -1,30 +1,37 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Mail, CheckCircle2 } from 'lucide-react';
-import AuthLayout from './AuthLayout';
-import { useToast } from '../../context/ToastContext';
-import api from '../../lib/api';
+import { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { Mail, CheckCircle2 } from "lucide-react";
+import AuthLayout from "./AuthLayout";
+import { useToast } from "../../context/ToastContext";
+import api from "../../lib/api";
 
 export default function ForgotPasswordPage() {
   const { toast } = useToast();
-  const [email, setEmail] = useState('');
+
+  const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setLoading(true);
 
     try {
-      await api.post('/auth/forgot-password', { email });
+      await api.post("/auth/forgot-password", {
+        email,
+      });
+
       setSent(true);
-      toast('Password reset link sent to your email.', 'success');
+
+      toast("Account found. You can reset your password.", "success");
     } catch (error) {
       const message = axios.isAxiosError(error)
-        ? error.response?.data?.message || 'Unable to send reset link right now.'
-        : 'Unable to send reset link right now.';
-      toast(message, 'error');
+        ? error.response?.data?.message || "Unable to find account."
+        : "Unable to find account.";
+
+      toast(message, "error");
     } finally {
       setLoading(false);
     }
@@ -33,7 +40,7 @@ export default function ForgotPasswordPage() {
   return (
     <AuthLayout
       title="Forgot Password"
-      subtitle="Enter your email address and we'll send you a secure password reset link."
+      subtitle="Enter your email address to reset your password."
     >
       {sent ? (
         <div className="text-center py-4">
@@ -41,25 +48,21 @@ export default function ForgotPasswordPage() {
             <CheckCircle2 className="h-7 w-7" />
           </div>
 
-          <h3 className="text-lg font-semibold mb-2">
-            Check your inbox
-          </h3>
+          <h3 className="text-lg font-semibold mb-2">Account Found</h3>
 
           <p className="text-sm text-slate-500 mb-2">
-            We've sent a password reset link to
+            You can now reset your password for:
           </p>
 
           <p className="font-medium text-slate-700 dark:text-slate-300 break-all mb-6">
             {email}
           </p>
 
-          <p className="text-sm text-slate-500 mb-6">
-            Open the email and click the <strong>Reset Password</strong> link.
-            The link will expire in <strong>10 minutes</strong>.
-          </p>
-
-          <Link to="/login" className="btn-primary w-full">
-            Back to Sign In
+          <Link
+            to={`/reset-password?email=${email}`}
+            className="btn-primary w-full"
+          >
+            Reset Password
           </Link>
         </div>
       ) : (
@@ -86,13 +89,13 @@ export default function ForgotPasswordPage() {
             disabled={loading}
             className="btn-primary w-full"
           >
-            {loading ? 'Sending...' : 'Send Reset Link'}
+            {loading ? "Checking..." : "Continue"}
           </button>
         </form>
       )}
 
       <p className="mt-6 text-center text-sm text-slate-500">
-        Remember your password?{' '}
+        Remember your password?{" "}
         <Link
           to="/login"
           className="text-brand-600 dark:text-brand-400 font-medium hover:underline"
