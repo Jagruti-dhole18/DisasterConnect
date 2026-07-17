@@ -12,15 +12,26 @@ dotenv.config();
 //     pass: process.env.EMAIL_PASS,
 //   },
 // });
+// const transporter = nodemailer.createTransport({
+//   host: "smtp.gmail.com",
+//   port: 465,
+//   secure: true,
+//   family: 4,
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
+
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  family: 4,
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  connectionTimeout: 60000,
+  greetingTimeout: 30000,
+  socketTimeout: 60000,
 });
 
 export const sendEmail = async ({ to, subject, text, html }) => {
