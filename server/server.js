@@ -1,3 +1,7 @@
+import dns from "node:dns";
+
+dns.setDefaultResultOrder("ipv4first");
+
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -25,7 +29,9 @@ import messageRoutes from './routes/messageRoutes.js';
 import disasterAlertRoutes from './routes/disasterAlertRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 
-dotenv.config({ path: fileURLToPath(new URL('./.env', import.meta.url)) });
+
+
+dotenv.config();
 connectDB();
 
 const app = express();
