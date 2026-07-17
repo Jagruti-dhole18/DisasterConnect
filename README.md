@@ -18,7 +18,7 @@ A production-quality, full-stack web application that connects citizens, volunte
 - [Database Models](#database-models)
 - [Authentication & Security](#authentication--security)
 - [Deployment Guide](#deployment-guide)
-- [Demo Accounts](#demo-accounts)
+
 
 ---
 
@@ -91,7 +91,6 @@ DisasterConnect is a community-driven disaster response platform designed to sav
 - Bcrypt (password hashing)
 - Multer + Cloudinary (image uploads)
 - Socket.io (real-time)
-- Nodemailer (emails)
 - Helmet, express-rate-limit, xss-clean, hpp (security)
 
 ---
@@ -123,7 +122,6 @@ disasterconnect/
 │   │   │   ├── ThemeContext.tsx
 │   │   │   └── ToastContext.tsx
 │   │   ├── data/
-│   │   │   ├── seed.ts
 │   │   │   └── store.ts
 │   │   ├── pages/
 │   │   │   ├── auth/
@@ -186,10 +184,6 @@ disasterconnect/
 │   │   ├── notificationRoutes.js
 │   │   ├── disasterAlertRoutes.js
 │   │   └── adminRoutes.js
-│   ├── services/
-│   │   └── emailService.js
-│   ├── utils/
-│   │   └── seed.js
 │   ├── .env.example
 │   ├── server.js
 │   └── package.json
@@ -268,11 +262,6 @@ Client runs on `http://localhost:5173`
 | `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name | — |
 | `CLOUDINARY_API_KEY` | Cloudinary API key | — |
 | `CLOUDINARY_API_SECRET` | Cloudinary API secret | — |
-| `EMAIL_HOST` | SMTP host | `smtp.gmail.com` |
-| `EMAIL_PORT` | SMTP port | `587` |
-| `EMAIL_USER` | Email account | — |
-| `EMAIL_PASS` | Email app password | — |
-| `EMAIL_FROM` | From address | — |
 
 ---
 
@@ -288,7 +277,6 @@ Base URL: `http://localhost:5000/api`
 | POST | `/auth/refresh-token` | Refresh access token | Public |
 | POST | `/auth/forgot-password` | Send password reset email | Public |
 | POST | `/auth/reset-password` | Reset password with token | Public |
-| POST | `/auth/verify-email` | Verify email with token | Public |
 | GET | `/auth/me` | Get current user profile | Auth |
 | PUT | `/auth/me` | Update profile | Auth |
 
@@ -372,7 +360,7 @@ Base URL: `http://localhost:5000/api`
 ### User
 ```
 name, email, password (hashed), role, phone, avatar, location,
-isVerified, emailVerified, emailVerificationToken, passwordResetToken,
+isVerified, emailVerified,
 volunteerProfile { skills, availability, rewardPoints, missionsCompleted, verified, rating },
 ngoProfile { organizationName, registrationId, approved, description }
 ```
@@ -438,8 +426,8 @@ sender (ref), senderName, recipient (ref), content, read
 - **Input Validation** — express-validator + Mongoose schema validation
 - **Input Sanitization** — Mongoose built-in
 - **Protected Routes** — Role-based access control middleware
-- **Email Verification** — Token-based email verification on registration
-- **Password Reset** — Token-based reset with expiry
+- **Admin Verification** — Volunteers and NGOs require admin approval
+- **Password Reset** — Secure password reset flow
 
 ---
 
