@@ -2,7 +2,7 @@
 
 A production-quality, full-stack web application that connects citizens, volunteers, NGOs, and administrators during disaster emergencies. Built with React (Vite) on the frontend and Node.js/Express/MongoDB on the backend.
 
-![Tech Stack](https://img.shields.io/badge/Stack-React%20%2B%20Express%20%2B%20MongoDB-red)
+![Tech Stack](https://img.shields.io/badge/Stack-React%20%2B%20TypeScript%20%2B%20TailwindCSS%20%2B%20Node.js%20%2B%20Express%20%2B%20MongoDB-red)
 
 ---
 
